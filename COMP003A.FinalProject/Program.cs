@@ -14,23 +14,23 @@ namespace COMP003A.FinalProject
             int choice = 0;
             List<Pokemon> pokeInfo = new List<Pokemon>();
 
+            // This loop displays a menu and accepts user input to choose a specific option; ends when user chooses to exit
             while (choice != 5)
             {
-                Console.WriteLine("1. Add New Pokemon \n2. View All Pokemon Values \n3. Search By Type \n4. Display Stat Averages \n5. Exit\n");
+                Console.WriteLine("\n1. Add New Pokemon \n2. View All Pokemon Values \n3. Search By Type \n4. Display Stat Averages \n5. Exit\n");
                 Console.Write("Enter Choice: ");
                 bool useMenuLimits = true;
                 choice = ValidateInput(useMenuLimits);
-                Console.WriteLine(choice);
 
-                Console.WriteLine(pokeInfo.Count);
                 switch (choice)
                 {
                     case 1:
                         {
+                            // Lets user create and store new pokemon
+
                             if (pokeInfo.Count < 6)
                             {
-                                pokeInfo.Add(CreatePokemon(pokeInfo));
-                                Console.WriteLine(pokeInfo.Count);
+                                pokeInfo.Add(CreatePokemon(pokeInfo.Count));
                             }
                             else
                             {
@@ -41,6 +41,9 @@ namespace COMP003A.FinalProject
 
                     case 2:
                         {
+                            // Displays each category and then the values of each pokemon
+                            // I'd like this to display in columns for a cleaner output, but I don't have time to work out how to make it happen
+
                             Console.WriteLine("Species, Nickname, Primary Type, Secondary Type, Ability, Nature, Tera Type, Held Item, Offensive Preference, Defensive Preference, Team Role, HP, Physical Attack, Special Attack, Physical Defense, Special Defense, Speed, Base Stat Total, Level, Pokedex Number, Shiny, Fully Evolved, Able to Mega Evolve, Legendary, Mythical");
                             foreach (Pokemon pokemon in pokeInfo)
                             {
@@ -51,6 +54,9 @@ namespace COMP003A.FinalProject
 
                     case 3:
                         {
+                            // Lets user search for pokemon by type
+                            // Every pokemone has 1 or 2 types which defines much of what they can do
+
                             Console.Write("Enter a Type: ");
                             string type = Console.ReadLine().ToUpper();
                             int found = 0;
@@ -73,30 +79,41 @@ namespace COMP003A.FinalProject
 
                     case 4:
                         {
-                            double averageRealStats = 0;
+                            // Displays the average real stat total and base stat total of each stored pokemon
+                            // Base stats are the primary value that decides how many of each stat a pokemon gains upon leveling up; higher base stat total is often used to gauge overall power
+                            // Real stats are the actual stat values a pokemon currently has; depends mostly on base stats and current level
+
+                            double averageRealStatTotal = 0;
                             double averageBaseStatTotal = 0;
 
                             foreach(Pokemon pokemon in pokeInfo)
                             {
-                                averageRealStats += pokemon.AverageStats();
+                                averageRealStatTotal += pokemon.AverageStats();
                                 averageBaseStatTotal += pokemon.BaseStatTotal;
                             }
 
-                            averageRealStats /= pokeInfo.Count;
+                            averageRealStatTotal /= pokeInfo.Count;
                             averageBaseStatTotal /= pokeInfo.Count;
 
-                            Console.WriteLine($"Average Real Stats: {averageRealStats}, Average Base Stat Total: {averageBaseStatTotal}");
+                            Console.WriteLine($"Average Real Stats: {averageRealStatTotal}, Average Base Stat Total: {averageBaseStatTotal}");
 
                             break;
                         }
 
                     case 5:
                         {
+                            // Ends program
+
                             Console.WriteLine("Program Ended.");
                             break;
                         }
                 }
             }
+
+            // Used to put interger inputs though a try/catch for parsing
+            // Uses parameter value to decide if/how range should be limited
+            // There are only 1 range to be enforced in this project so this value is a bool,
+            // but in the future I would use an interger for scalability 
 
             static int ValidateInput(bool useMenuLimits)
             {
@@ -136,8 +153,14 @@ namespace COMP003A.FinalProject
                 return choice;
             }
 
-            static Pokemon CreatePokemon(List<Pokemon> storedPokemon)
+            // This method is used to create new objects (pokemon) and return that object to main
+            static Pokemon CreatePokemon(int storedPokemon)
             {
+                // To avoid making a write/readline for each input, this stores each question in a List and creates Lists to store each type of input
+                // The loop then writes each question and prompts an input, converting the input to the right data type based on which question is being asked
+                // The questions List is ordered by required data type so that index number can be used to decide how input should be converted
+                // I'm a bit proud of this one :) 
+
                 List<string> questions = new List<string>() { "Pokemon Species", "Pokemon Nickname ('none' if N/A')", "Primary Type", "Secondary Type ('none' if N/A)", "Ability", "Nature", "Tera Type", "Held Item ('none' if N/A)", "HP", "Physical Attack", "Special Attack", "Physical Defense", "Special Defense", "Speed", "Base Stat Total", "Level", "Pokedex Number", "Shiny (y/n)", "Fully Evolved (y/n)", "Able to Mega Evolve (y/n)", "Legendary (y/n)", "Mythical (y/n)"};
                 List<string> stringFields = new List<string>();
                 List<int> intFields = new List<int>();
@@ -166,6 +189,13 @@ namespace COMP003A.FinalProject
                     }
                 }
                 
+                // These if/else chains use previous user inputs to map the conditional class fields.
+                // The intFields values represent pokemon stats and are used to categorize what kind of offense or defence situations they are better for.
+                // They are also used to categorize a pokemons general role in a team. These are all terms common in competitive pokemon.
+                // These descriptions are way more naunced in the actual game, but this works for the program.
+
+                // 0 = Hit Points, 1 = Physical Attack, 2 = Special Attack, 3 = Physical Defense, 4 = Special Defense, 5 = Speed
+
                 int offenseDecider = intFields[1] - intFields[2];
                 if (offenseDecider >= -15 && offenseDecider <= 15)
                 {
@@ -218,7 +248,12 @@ namespace COMP003A.FinalProject
                     stringFields.Add("ROUNDED SUPPORT");
                 }
 
-                switch (storedPokemon.Count)
+                // This constructs a new object to store all of the values as a new pokemon
+                // I don't know how to name new varaibles dynamically so I capped the number of objects stored at 6
+                // (This is the number of pokemon you can have on a team in game)
+                // The switch case will name the new object based on how many are already stored
+
+                switch (storedPokemon)
                 {
                     case 0:
                         {
@@ -255,21 +290,6 @@ namespace COMP003A.FinalProject
                             Pokemon pokemon6 = new Pokemon(stringFields, intFields, boolFields);
                             return pokemon6;
                         }
-                }
-
-
-
-                foreach (string field in stringFields)
-                {
-                    Console.WriteLine(field);
-                }
-                foreach (int field in intFields)
-                {
-                    Console.WriteLine(field);
-                }
-                foreach (bool field in boolFields)
-                {
-                    Console.WriteLine(field);
                 }
             }
         }

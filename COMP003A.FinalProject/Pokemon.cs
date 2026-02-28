@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security.Principal;
 
+// This class is used to store specifc data about individual pokemon
 public class Pokemon
 {
 	public string Species;
@@ -32,7 +33,8 @@ public class Pokemon
 	public bool Legendary;
 	public bool Mythical;
 	public bool CanMegaEvolve;
-		
+	
+	// Used to initialize new objects; values used from CreatePokemon() method in main
 	public Pokemon(List<string> stringValues, List<int> intValues, List<bool> boolValues)
 	{
 		Species = stringValues[0];
@@ -62,11 +64,13 @@ public class Pokemon
 		Mythical = boolValues[4];
 	}
 
+	// This method simply displays each value of an object
 	public void DisplayValue()
 	{
 		Console.WriteLine($"\n{Species}, {Nickname}, {Type1}, {Type2}, {Ability}, {Nature}, {TeraType}, {Item}, {Offense}, {Defense}, {TeamRole}, {HitPoints}, {PhysAttack}, {SpecAttack}, {PhysDefense}, {SpecDefense}, {Speed}, {BaseStatTotal}, {Level}, {DexNumber}, {Shiny}, {FullEvolved}, {CanMegaEvolve}, {Legendary}, {Mythical}");
 	}
 
+	// This method returns the average of a pokemon's real stats; used/explained in menu option 4
 	public double AverageStats()
 	{
 		double average = Convert.ToDouble(HitPoints + PhysAttack + SpecAttack + PhysDefense + SpecDefense + Speed) / 6;
