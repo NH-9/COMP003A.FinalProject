@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Principal;
 
 public class Pokemon
 {
@@ -64,5 +65,11 @@ public class Pokemon
 	public void DisplayValue()
 	{
 		Console.WriteLine($"\n{Species}, {Nickname}, {Type1}, {Type2}, {Ability}, {Nature}, {TeraType}, {Item}, {Offense}, {Defense}, {TeamRole}, {HitPoints}, {PhysAttack}, {SpecAttack}, {PhysDefense}, {SpecDefense}, {Speed}, {BaseStatTotal}, {Level}, {DexNumber}, {Shiny}, {FullEvolved}, {CanMegaEvolve}, {Legendary}, {Mythical}");
+	}
+
+	public double AverageStats()
+	{
+		double average = Convert.ToDouble(HitPoints + PhysAttack + SpecAttack + PhysDefense + SpecDefense + Speed) / 6;
+		return average;
 	}
 }

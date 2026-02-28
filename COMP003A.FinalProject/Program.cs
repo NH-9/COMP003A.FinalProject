@@ -56,11 +56,26 @@ namespace COMP003A.FinalProject
 
                     case 4:
                         {
+                            double averageRealStats = 0;
+                            double averageBaseStatTotal = 0;
+
+                            foreach(Pokemon pokemon in pokeInfo)
+                            {
+                                averageRealStats += pokemon.AverageStats();
+                                averageBaseStatTotal += pokemon.BaseStatTotal;
+                            }
+
+                            averageRealStats /= pokeInfo.Count;
+                            averageBaseStatTotal /= pokeInfo.Count;
+
+                            Console.WriteLine($"Average Real Stats: {averageRealStats}, Average Base Stat Total: {averageBaseStatTotal}");
+
                             break;
                         }
 
                     case 5:
                         {
+                            Console.WriteLine("Program Ended.");
                             break;
                         }
                 }
