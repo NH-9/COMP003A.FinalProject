@@ -16,7 +16,7 @@ namespace COMP003A.FinalProject
 
             while (choice != 5)
             {
-                Console.WriteLine("1. Add New Pokemon \n2. View All Records \n3. Search Records \n4. Display Summary Statistics \n5. Exit\n");
+                Console.WriteLine("1. Add New Pokemon \n2. View All Pokemon Values \n3. Search By Type \n4. Display Stat Averages \n5. Exit\n");
                 Console.Write("Enter Choice: ");
                 bool useMenuLimits = true;
                 choice = ValidateInput(useMenuLimits);
@@ -51,6 +51,23 @@ namespace COMP003A.FinalProject
 
                     case 3:
                         {
+                            Console.Write("Enter a Type: ");
+                            string type = Console.ReadLine().ToUpper();
+                            int found = 0;
+
+                            foreach (Pokemon pokemon in pokeInfo)
+                            {
+                                if (type == pokemon.Type1 || type == pokemon.Type2)
+                                {
+                                    pokemon.DisplayValue();
+                                    found++;
+                                }
+                            }
+                            if (found == 0)
+                            {
+                                Console.WriteLine("No Matches Found");
+                            }
+
                             break;
                         }
 
