@@ -22,13 +22,15 @@ namespace COMP003A.FinalProject
                 choice = ValidateInput(useMenuLimits);
                 Console.WriteLine(choice);
 
+                Console.WriteLine(pokeInfo.Count);
                 switch (choice)
                 {
                     case 1:
                         {
-                            if (pokeInfo.Count >= 6)
+                            if (pokeInfo.Count < 6)
                             {
                                 pokeInfo.Add(CreatePokemon(pokeInfo));
+                                Console.WriteLine(pokeInfo.Count);
                             }
                             else
                             {
@@ -39,6 +41,11 @@ namespace COMP003A.FinalProject
 
                     case 2:
                         {
+                            Console.WriteLine("Species, Nickname, Primary Type, Secondary Type, Ability, Nature, Tera Type, Held Item, Offensive Preference, Defensive Preference, Team Role, HP, Physical Attack, Special Attack, Physical Defense, Special Defense, Speed, Base Stat Total, Level, Pokedex Number, Shiny, Fully Evolved, Able to Mega Evolve, Legendary, Mythical");
+                            foreach (Pokemon pokemon in pokeInfo)
+                            {
+                                pokemon.DisplayValue();
+                            }
                             break;
                         }
 
@@ -99,7 +106,7 @@ namespace COMP003A.FinalProject
 
             static Pokemon CreatePokemon(List<Pokemon> storedPokemon)
             {
-                List<string> questions = new List<string>() { "Pokemon Species", "Pokemon Nickname", "Primary Type", "Secondary Type ('none' if N/A)", "Ability", "Nature", "Tera Type", "Held Item", "HP", "Physical Attack", "Special Attack", "Physical Defense", "Special Defense", "Speed", "Base Stat Total", "Level", "Pokedex Number", "Shiny (y/n)", "Fully Evolved (y/n)", "Able to Mega Evolve (y/n)", "Legendary (y/n)", "Mythical (y/n)"};
+                List<string> questions = new List<string>() { "Pokemon Species", "Pokemon Nickname ('none' if N/A')", "Primary Type", "Secondary Type ('none' if N/A)", "Ability", "Nature", "Tera Type", "Held Item ('none' if N/A)", "HP", "Physical Attack", "Special Attack", "Physical Defense", "Special Defense", "Speed", "Base Stat Total", "Level", "Pokedex Number", "Shiny (y/n)", "Fully Evolved (y/n)", "Able to Mega Evolve (y/n)", "Legendary (y/n)", "Mythical (y/n)"};
                 List<string> stringFields = new List<string>();
                 List<int> intFields = new List<int>();
                 List<bool> boolFields = new List<bool>();
