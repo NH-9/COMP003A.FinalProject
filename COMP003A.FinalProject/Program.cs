@@ -1,4 +1,8 @@
-﻿namespace COMP003A.FinalProject
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Transactions;
+
+namespace COMP003A.FinalProject
 {
     internal class Program
     {
@@ -8,23 +12,53 @@
             Console.WriteLine("----------------------------------");
 
             int choice = 0;
+            List<Pokemon> pokeinfo = new List<Pokemon>();
 
             while (choice != 5)
             {
                 Console.WriteLine("1. Add New Pokemon \n2. View All Records \n3. Search Records \n4. Display Summary Statistics \n5. Exit\n");
-                choice = ValidateInput();
+                Console.Write("Enter Choice: ");
+                bool useMenuLimits = true;
+                choice = ValidateInput(useMenuLimits);
                 Console.WriteLine(choice);
+
+                switch (choice)
+                {
+                    case 1:
+                        {
+                            CreatePokemon();
+                            break;
+                        }
+
+                    case 2:
+                        {
+                            break;
+                        }
+
+                    case 3:
+                        {
+                            break;
+                        }
+
+                    case 4:
+                        {
+                            break;
+                        }
+
+                    case 5:
+                        {
+                            break;
+                        }
+                }
             }
 
-            static int ValidateInput()
+            static int ValidateInput(bool useMenuLimits)
             {
                 int choice = 0;
                 bool valid = false;
                 
                 while (!valid)
                 {
-                    Console.Write("Enter Choice: ");
-
                     try
                     {
                         choice = int.Parse(Console.ReadLine());
@@ -35,19 +69,70 @@
                         continue;
                     }
 
-                    if (choice >= 1 && choice <= 5)
+                    if (useMenuLimits)
                     {
-                        valid = true;
+                        if (choice >= 1 && choice <= 5)
+                        {
+                            valid = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Number Out Of Range\n");
+                            continue;
+                        }
                     }
                     else
                     {
-                        Console.WriteLine("Number Out Of Range\n");
+                        valid = true;
                     }
                 }
 
                 return choice;
             }
 
+            static void CreatePokemon()
+            {
+                List<string> questions = new List<string>() { "Pokemon Species", "Pokemon Nickname", "Primary Type", "Secondary Type ('none' if N/A)", "Ability", "Nature", "Tera Type", "Held Item", "HP", "Physical Attack", "Special Attack", "Physical Defense", "Special Defense", "Speed", "Base Stat Total", "Level", "Pokedex Number", "Shiny (y/n)", "Fully Evolved (y/n)", "Able to Mega Evolve (y/n)", "Legendary (y/n)", "Mythical (y/n)"};
+                List<string> stringFields = new List<string>();
+                List<int> intFields = new List<int>();
+                List<bool> boolFields = new List<bool>();
+                bool useMenuLimits = false;
+                
+                Console.WriteLine("Enter Each Requested Value");
+                
+                for (int i = 0; i < questions.Count; i++)
+                {
+                    Console.Write($"{questions[i]}: ");
+
+                    if (i < 8)
+                    {
+                        stringFields.Add(Console.ReadLine().ToUpper());
+                    }
+                    else if (i < 17)
+                    {
+                        int input = ValidateInput(useMenuLimits);
+                        intFields.Add(input);
+                    }
+                    else
+                    {
+                        bool input = (Console.ReadLine().ToLower() == "y");
+                        boolFields.Add(input);
+                    }
+                }
+                
+                foreach (string field in stringFields)
+                {
+                    Console.WriteLine(field);
+                }
+                foreach (int field in intFields)
+                {
+                    Console.WriteLine(field);
+                }
+                foreach (bool field in boolFields)
+                {
+                    Console.WriteLine(field);
+                }
+            }
         }
     }
 }
