@@ -44,10 +44,17 @@ namespace COMP003A.FinalProject
                             // Displays each category and then the values of each pokemon
                             // I'd like this to display in columns for a cleaner output, but I don't have time to work out how to make it happen
 
-                            Console.WriteLine("Species, Nickname, Primary Type, Secondary Type, Ability, Nature, Tera Type, Held Item, Offensive Preference, Defensive Preference, Team Role, HP, Physical Attack, Special Attack, Physical Defense, Special Defense, Speed, Base Stat Total, Level, Pokedex Number, Shiny, Fully Evolved, Able to Mega Evolve, Legendary, Mythical");
-                            foreach (Pokemon pokemon in pokeInfo)
+                            if (pokeInfo.Count > 0)
                             {
-                                pokemon.DisplayValue();
+                                Console.WriteLine("Species, Nickname, Primary Type, Secondary Type, Ability, Nature, Tera Type, Held Item, Offensive Preference, Defensive Preference, Team Role, HP, Physical Attack, Special Attack, Physical Defense, Special Defense, Speed, Base Stat Total, Level, Pokedex Number, Shiny, Fully Evolved, Able to Mega Evolve, Legendary, Mythical");
+                                foreach (Pokemon pokemon in pokeInfo)
+                                {
+                                    pokemon.DisplayValue();
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("No Pokemon Detected");
                             }
                             break;
                         }
@@ -83,20 +90,26 @@ namespace COMP003A.FinalProject
                             // Base stats are the primary value that decides how many of each stat a pokemon gains upon leveling up; higher base stat total is often used to gauge overall power
                             // Real stats are the actual stat values a pokemon currently has; depends mostly on base stats and current level
 
-                            double averageRealStatTotal = 0;
-                            double averageBaseStatTotal = 0;
-
-                            foreach(Pokemon pokemon in pokeInfo)
+                            if (pokeInfo.Count > 0)
                             {
-                                averageRealStatTotal += pokemon.AverageStats();
-                                averageBaseStatTotal += pokemon.BaseStatTotal;
+                                double averageRealStatTotal = 0;
+                                double averageBaseStatTotal = 0;
+
+                                foreach (Pokemon pokemon in pokeInfo)
+                                {
+                                    averageRealStatTotal += pokemon.AverageStats();
+                                    averageBaseStatTotal += pokemon.BaseStatTotal;
+                                }
+
+                                averageRealStatTotal /= pokeInfo.Count;
+                                averageBaseStatTotal /= pokeInfo.Count;
+
+                                Console.WriteLine($"Average Real Stats: {averageRealStatTotal}, Average Base Stat Total: {averageBaseStatTotal}");
                             }
-
-                            averageRealStatTotal /= pokeInfo.Count;
-                            averageBaseStatTotal /= pokeInfo.Count;
-
-                            Console.WriteLine($"Average Real Stats: {averageRealStatTotal}, Average Base Stat Total: {averageBaseStatTotal}");
-
+                            else
+                            {
+                                Console.WriteLine("No Pokemon Detected");
+                            }
                             break;
                         }
 
@@ -128,7 +141,8 @@ namespace COMP003A.FinalProject
                     }
                     catch
                     {
-                        Console.WriteLine("Invalid Numeric Input\n");
+                        Console.WriteLine("Invalid Numeric Input");
+                        Console.Write("Please try again: ");
                         continue;
                     }
 
@@ -140,7 +154,8 @@ namespace COMP003A.FinalProject
                         }
                         else
                         {
-                            Console.WriteLine("Number Out Of Range\n");
+                            Console.WriteLine("Number Out Of Range");
+                            Console.Write("Please try again: ");
                             continue;
                         }
                     }
