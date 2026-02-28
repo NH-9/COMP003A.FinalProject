@@ -32,7 +32,8 @@ public class Pokemon
 	public bool Mythical;
 	public bool CanMegaEvolve;
 		
-	public Pokemon()
+	public Pokemon(List<string> stringValues, List<int> intValues, List<bool> boolValues)
 	{
+
 	}
 }

@@ -12,7 +12,7 @@ namespace COMP003A.FinalProject
             Console.WriteLine("----------------------------------");
 
             int choice = 0;
-            List<Pokemon> pokeinfo = new List<Pokemon>();
+            List<Pokemon> pokeInfo = new List<Pokemon>();
 
             while (choice != 5)
             {
@@ -26,7 +26,14 @@ namespace COMP003A.FinalProject
                 {
                     case 1:
                         {
-                            CreatePokemon();
+                            if (pokeInfo.Count >= 6)
+                            {
+                                pokeInfo.Add(CreatePokemon(pokeInfo));
+                            }
+                            else
+                            {
+                                Console.WriteLine("Maximum Storage Reached");
+                            }
                             break;
                         }
 
@@ -90,7 +97,7 @@ namespace COMP003A.FinalProject
                 return choice;
             }
 
-            static void CreatePokemon()
+            static Pokemon CreatePokemon(List<Pokemon> storedPokemon)
             {
                 List<string> questions = new List<string>() { "Pokemon Species", "Pokemon Nickname", "Primary Type", "Secondary Type ('none' if N/A)", "Ability", "Nature", "Tera Type", "Held Item", "HP", "Physical Attack", "Special Attack", "Physical Defense", "Special Defense", "Speed", "Base Stat Total", "Level", "Pokedex Number", "Shiny (y/n)", "Fully Evolved (y/n)", "Able to Mega Evolve (y/n)", "Legendary (y/n)", "Mythical (y/n)"};
                 List<string> stringFields = new List<string>();
@@ -171,6 +178,46 @@ namespace COMP003A.FinalProject
                 {
                     stringFields.Add("ROUNDED SUPPORT");
                 }
+
+                switch (storedPokemon.Count)
+                {
+                    case 0:
+                        {
+                            Pokemon pokemon1 = new Pokemon(stringFields, intFields, boolFields);
+                            return pokemon1;
+                        }
+
+                    case 1:
+                        {
+                            Pokemon pokemon2 = new Pokemon(stringFields, intFields, boolFields);
+                            return pokemon2;
+                        }
+
+                    case 2:
+                        {
+                            Pokemon pokemon3 = new Pokemon(stringFields, intFields, boolFields);
+                            return pokemon3;
+                        }
+
+                    case 3:
+                        {
+                            Pokemon pokemon4 = new Pokemon(stringFields, intFields, boolFields);
+                            return pokemon4;
+                        }
+
+                    case 4:
+                        {
+                            Pokemon pokemon5 = new Pokemon(stringFields, intFields, boolFields);
+                            return pokemon5;
+                        }
+
+                    default:
+                        {
+                            Pokemon pokemon6 = new Pokemon(stringFields, intFields, boolFields);
+                            return pokemon6;
+                        }
+                }
+
 
 
                 foreach (string field in stringFields)
