@@ -120,6 +120,59 @@ namespace COMP003A.FinalProject
                     }
                 }
                 
+                int offenseDecider = intFields[1] - intFields[2];
+                if (offenseDecider >= -15 && offenseDecider <= 15)
+                {
+                    stringFields.Add("MIXXED ATTACKER");
+                }
+                else if (intFields[1] > intFields[2])
+                {
+                    stringFields.Add("PHYSICAL ATTACKER");
+                }
+                else
+                {
+                    stringFields.Add("SPECIAL ATTACKER");
+                }
+
+                int defenceDecider = intFields[3] - intFields[4];
+                if (defenceDecider >= -15 && defenceDecider <= 15)
+                {
+                    stringFields.Add("MIXXED BULK");
+                }
+                else if (intFields[3] > intFields[4])
+                {
+                    stringFields.Add("PHYSICALLY BULKY");
+                }
+                else
+                {
+                    stringFields.Add("SPECIALLY BULKY");
+                }
+
+                if (intFields[1] > 100 || intFields[2] > 100)
+                {
+                    if (intFields[5] > 100)
+                    {
+                        stringFields.Add("FAST SWEEPER");
+                    }
+                    else if (intFields[0] > 100)
+                    {
+                        stringFields.Add("BULKY SWEEPER");
+                    }
+                    else
+                    {
+                        stringFields.Add("ROUNDED SWEEPER");
+                    }
+                }
+                else if (intFields[3] > 100 || intFields[4] > 100)
+                {
+                    stringFields.Add("BULKY SUPPORT");
+                }
+                else
+                {
+                    stringFields.Add("ROUNDED SUPPORT");
+                }
+
+
                 foreach (string field in stringFields)
                 {
                     Console.WriteLine(field);
